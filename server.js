@@ -6,6 +6,7 @@ const Person = require("./models/person"); // require the person model
 const MenuItem = require("./models/menuItem"); // require the menuitem model
 const personRoutes = require("./routes/personRoutes"); // require the personRoutes from routes folder
 const menuRoutes = require("./routes/menuItemRoutes"); // require the menuRoutes from routes folder
+require("dotenv").config(); // require the dotenv module used for storing sensitive info
 
 // --------------------------------------------------------------------- Require the body-parser module
 
@@ -28,7 +29,10 @@ app.use("/person", personRoutes);
 app.use("/menu", menuRoutes);
 
 // ===================================================================== start the server and listen on port 3000
-app.listen(3000, () => {
+const PORT = process.env.PORT || 3000; // get the port number from the environment variable or use 3000
+
+
+app.listen(PORT, () => {
   console.log("listening on port 3000"); // log a message when the server is listening
 });
 
