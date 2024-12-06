@@ -115,8 +115,3 @@ The `MenuItem` data model represents information about menu items available in t
 ```Javascript
 npm install
 ```
-
----
-
-## Deployed Link
-Link : https://hotel-v0rl.onrender.com
