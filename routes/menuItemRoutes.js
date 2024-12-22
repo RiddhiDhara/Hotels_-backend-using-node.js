@@ -3,7 +3,7 @@ const express = require("express");
 const MenuItem = require("../models/menuItem");
 const router = express.Router();
 
-// GET methods
+// GET methods ----------> retrieve the data from the database
 
 router.get("/", async (req, res) => {
   try {
@@ -34,7 +34,7 @@ router.get("/:tasteType", async (req, res) => {
   }
 });
 
-// POST method
+// POST method ----------> insert the data into the database
 
 router.post("/", async (req, res) => {
   try {

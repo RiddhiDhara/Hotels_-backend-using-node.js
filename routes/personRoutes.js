@@ -3,7 +3,7 @@ const express = require("express");
 const Person = require("./../models/person");
 const router = express.Router();
 
-// GET methods
+// GET methods ----------> retrieve the data from the database
 
 router.get("/", async (req, res) => {
   try {
@@ -36,7 +36,7 @@ router.get("/:workType", async (req, res) => {
   }
 });
 
-// POST methods
+// POST methods  ----------> save the data to the database
 
 router.post("/", async (req, res) => {
   try {
@@ -52,7 +52,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// PUT methods
+// PUT methods ----------> update the data in the database
 
 router.put("/:id", async (req, res) => {
   try {
@@ -79,7 +79,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// DELETE methods
+// DELETE methods ----------> delete the data from the database
 
 router.delete("/:id", async (req, res) => {
   try {

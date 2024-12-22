@@ -1,42 +1,56 @@
-
 const express = require("express"); // require the express module
 const app = express(); // create an express app
 const db = require("./db"); // require the db module
-const Person = require("./models/person"); // require the person model
-const MenuItem = require("./models/menuItem"); // require the menuitem model
 const personRoutes = require("./routes/personRoutes"); // require the personRoutes from routes folder
 const menuRoutes = require("./routes/menuItemRoutes"); // require the menuRoutes from routes folder
 require("dotenv").config(); // require the dotenv module used for storing sensitive info
+const passport = require("./auth"); // this is used for authentication which is the superset of passport-local
 
 // --------------------------------------------------------------------- Require the body-parser module
 
 const bodyParser = require("body-parser"); // Use body-parser middleware to parse JSON request bodies
 app.use(bodyParser.json()); // req.body
 
+// --------------------------------------------------------------------- middleware function to track log request from different clients
+const logRequest = (req, res, next) => {
+  console.log(
+    `[${new Date().toLocaleString()}] request made to : ${req.originalUrl}`   // print the current date and time
+  );
+  next();   // call the next middleware
+};
+
+// ---------------------------------------------------------------------middleware function calls
+app.use(logRequest); // calling localRequest
+app.use(passport.initialize()); // authentication middleware
+
 // --------------------------------------------------------------------- define a route for the root url ('/')
 
+const localAuthMiddleware = passport.authenticate("local", { session: false });
+
 app.get("/", function (req, res) {
-  res.send("welcome to my hotel... How may i help you!");   // respond with a welcome message
+  res.send("welcome to my hotel... How may i help you!"); // respond with a welcome message
 });
 
 // ===================================================================== routes
 
-// here we are writing /person instead of / because in personRoutes.js the common base url is written as /person and we need to remove that part from the url in personRoutes.js
-
-// use the routes from routes folder
-
-app.use("/person", personRoutes);
-app.use("/menu", menuRoutes);
+// ------------------------------------------------------------------------use the routes from routes folder
+app.use("/person", localAuthMiddleware, personRoutes); // Use the person routes with authentication middleware for '/person' endpoint
+app.use("/menu", menuRoutes); // Use the menu routes with authentication middleware for '/menu' endpoint
 
 // ===================================================================== start the server and listen on port 3000
+
 const PORT = process.env.PORT || 3000; // get the port number from the environment variable or use 3000
-
-
 app.listen(PORT, () => {
   console.log("listening on port 3000"); // log a message when the server is listening
 });
 
-// rough begins here
+
+
+
+
+
+
+// note : in line no. 39 and 40 : // here we are writing /person instead of / because in personRoutes.js the common base url is written as /person and we need to remove that part from the url in personRoutes.js
 
 
 
@@ -88,7 +102,50 @@ app.listen(PORT, () => {
 
 
 
-// ===========================================================================
+
+
+
+
+
+// =========================================================================== rough work
+
+
+// const Person = require("./models/person"); // require the person model  ------------> included in personRoutes.js
+// const MenuItem = require("./models/menuItem"); // require the menuitem model ------------> included in menuItemRoutes.js
+
+// below lines send to auth.js
+
+// passport.use(new localStrategy( async (USERNAME, PASSWORD, done) => {
+//   // try to authenticate the user using the following logic
+//   try{
+//     // print the credentials received
+//     console.log('receieved credentials : ',USERNAME,PASSWORD);
+//     // find the user with the specified username
+//     const user = await Person.findOne({username: USERNAME});
+//     // if user not found then send an error message
+//     if(!user){
+//       return done(null, false, {message : "Incorrect username!"})
+//     };
+//     // check if the password matches with the one stored in the database
+//     const isPasswordMatch = user.password === PASSWORD ? true : false;
+//     // if password matches then return the user object
+//     if(isPasswordMatch){
+//       return done(null, user);
+//     }
+//     // if password does not match then return an error message
+//     else{
+//       return done(null, false, {message : "Incorrect password!"})
+//     }
+//   }
+//   // if any error occurs during the authentication process then return the error
+//   catch(error){
+//     return done(error);
+//   }
+// }));
+
+// the below lines are send in auth.js
+// const passport = require("passport"); // this is used for authentication which is the superset of passport-local
+// const localStrategy = require("passport-local").Strategy; // passport local strategy means general username and password authentication
 
 // app.get("/menu", async (req, res) => {
 //   try {
