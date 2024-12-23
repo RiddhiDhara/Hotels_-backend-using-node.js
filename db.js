@@ -3,8 +3,8 @@ require("dotenv").config(); // require the dotenv module used for storing sensit
 
 // Define the mongoDB connection URL
 
-// const mongoURL = process.env.MONGODB_URL_LOCAL; // accessing the local mongoDB server from the .env file
-const mongoURL = process.env.MONGODB_URL; // calling the mongoURL from the .env file
+const mongoURL = process.env.MONGODB_URL_LOCAL; // accessing the local mongoDB server from the .env file
+// const mongoURL = process.env.MONGODB_URL; // calling the mongoURL from the .env file
 
 // set up mongoDB connections
 mongoose.connect(mongoURL, {
