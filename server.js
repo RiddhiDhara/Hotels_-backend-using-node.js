@@ -34,7 +34,7 @@ app.get("/", function (req, res) {
 // ===================================================================== routes
 
 // ------------------------------------------------------------------------use the routes from routes folder
-app.use("/person", localAuthMiddleware, personRoutes); // Use the person routes with authentication middleware for '/person' endpoint
+app.use("/person", personRoutes); // Use the person routes with authentication middleware for '/person' endpoint
 app.use("/menu", menuRoutes); // Use the menu routes with authentication middleware for '/menu' endpoint
 
 // ===================================================================== start the server and listen on port 3000

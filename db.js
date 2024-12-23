@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 require("dotenv").config(); // require the dotenv module used for storing sensitive info
 
 // Define the mongoDB connection URL
-// const mongoURL = "mongodb://127.0.0.1:27017/Hotel"; // replace 'mydatabase' with your database name
-const mongoURL = process.env.MONGODB_URL_LOCAL; // accessing the local mongoDB server from the .env file
+const mongoURL = "mongodb://127.0.0.1:27017/Hotel"; // replace 'mydatabase' with your database name
+// const mongoURL = process.env.MONGODB_URL_LOCAL; // accessing the local mongoDB server from the .env file
 // const mongoURL = "mongodb+srv://riddhidhara2003:qwerty12345@cluster0.dfkhr.mongodb.net/"; // here saving my local database server online on mongodb atlas
 // const mongoURL = process.env.MONGODB_URL; // calling the mongoURL from the .env file
 
